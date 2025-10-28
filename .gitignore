@@ -1,0 +1,26 @@
+# Sensible Dateien
+.ssh/
+.bash_history
+.rnd
+.wget-hsts
+
+# Cache und temporäre Dateien
+.cache/
+.local/
+.vscode-server/
+
+# .NET Dateien
+.dotnet/
+
+# Backup Dateien
+*.bak
+*.backup
+*~
+
+# Log Dateien
+*.log
+
+# Proxmox spezifische Dateien die sensibel sein könnten
+*.key
+*.pem
+*.crt

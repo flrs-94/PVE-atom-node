@@ -1,0 +1,28 @@
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+2: enp4s0: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+    link/ether 20:7c:14:f7:b2:23 brd ff:ff:ff:ff:ff:ff
+    altname enx207c14f7b223
+3: enp5s0: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+    link/ether 20:7c:14:f7:b2:24 brd ff:ff:ff:ff:ff:ff
+    altname enx207c14f7b224
+4: enp6s0: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+    link/ether 20:7c:14:f7:b2:25 brd ff:ff:ff:ff:ff:ff
+    altname enx207c14f7b225
+5: enp7s0: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+    link/ether 20:7c:14:f7:b2:26 brd ff:ff:ff:ff:ff:ff
+    altname enx207c14f7b226
+6: enp8s0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master vmbr0 state UP mode DEFAULT group default qlen 1000
+    link/ether 20:7c:14:f7:b2:27 brd ff:ff:ff:ff:ff:ff
+    altname enx207c14f7b227
+7: vmbr0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP mode DEFAULT group default qlen 1000
+    link/ether 20:7c:14:f7:b2:27 brd ff:ff:ff:ff:ff:ff
+04:00.0 Ethernet controller: Intel Corporation Ethernet Controller I226-V (rev 04)
+05:00.0 Ethernet controller: Intel Corporation Ethernet Controller I226-V (rev 04)
+06:00.0 Ethernet controller: Intel Corporation Ethernet Controller I226-V (rev 04)
+07:00.0 Ethernet controller: Intel Corporation Ethernet Controller I226-V (rev 04)
+08:00.0 Ethernet controller: Intel Corporation Ethernet Controller I226-V (rev 04)
+0b:00.0 Ethernet controller: Intel Corporation Ethernet Connection X553 10 GbE SFP+ (rev 11)
+0b:00.1 Ethernet controller: Intel Corporation Ethernet Connection X553 10 GbE SFP+ (rev 11)
+0c:00.0 Ethernet controller: Intel Corporation Ethernet Connection X553 10 GbE SFP+ (rev 11)
+0c:00.1 Ethernet controller: Intel Corporation Ethernet Connection X553 10 GbE SFP+ (rev 11)

@@ -1,0 +1,37 @@
+#!/bin/bash
+# ZFS+QAT Performance Monitor
+
+echo "=== ZFS+QAT Performance Report ==="
+echo "Zeitstempel: $(date)"
+
+# ZFS Pool Status
+echo -e "\n=== ZFS Pool Status ==="
+zpool list 2>/dev/null || echo "Keine ZFS Pools vorhanden"
+
+# ZFS Kompression Stats
+echo -e "\n=== ZFS Kompression Statistiken ==="
+if zpool list >/dev/null 2>&1; then
+    for pool in $(zpool list -H -o name); do
+        echo "Pool: $pool"
+        zfs get compressratio,compression $pool 2>/dev/null
+    done
+fi
+
+# QAT Hardware Status
+echo -e "\n=== QAT Hardware Status ==="
+/usr/local/bin/qat-status
+
+# ZFS ARC Stats (mit QAT)
+echo -e "\n=== ZFS ARC Cache ==="
+if [ -f /proc/spl/kstat/zfs/arcstats ]; then
+    echo "ARC Size: $(awk '/^size/ {print $3/1024/1024 " MB"}' /proc/spl/kstat/zfs/arcstats)"
+    echo "Hit Rate: $(awk '/^hits/ {hits=$3} /^misses/ {misses=$3} END {if(hits+misses>0) print (hits/(hits+misses)*100) "%"}' /proc/spl/kstat/zfs/arcstats)"
+fi
+
+# Theoretische Performance-Berechnung
+echo -e "\n=== Theoretische QAT-Performance ==="
+echo "CPU Cores: $(nproc)"
+echo "QAT Engines: 6"
+echo "Erwartete Kompression (QAT): ~2000 MB/s"
+echo "Erwartete Verschlüsselung (QAT): ~4000 MB/s"
+echo "Software-Baseline: ~500 MB/s"

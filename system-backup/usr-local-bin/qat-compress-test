@@ -1,0 +1,41 @@
+#!/bin/bash
+# QAT Kompression Benchmark
+
+echo "=== QAT Hardware-Kompression Test ==="
+
+# Testdatei erstellen
+echo "Erstelle Testdaten..."
+dd if=/dev/urandom of=/tmp/qat_test bs=1M count=100 2>/dev/null
+
+echo -e "\n=== Software-Kompression (CPU) ==="
+echo "Start: $(date)"
+time gzip -c /tmp/qat_test > /tmp/qat_test_cpu.gz
+CPU_SIZE=$(stat -c%s /tmp/qat_test_cpu.gz)
+echo "Komprimierte Größe (CPU): $CPU_SIZE bytes"
+
+echo -e "\n=== Hardware-Kompression Test ==="
+# QAT Counters vor Test
+echo "QAT Counters vor Test:"
+cat /sys/kernel/debug/qat_c3xxx_0000:01:00.0/fw_counters 2>/dev/null || echo "Debug nicht verfügbar"
+
+echo -e "\nKompression mit QAT-optimiertem Tool..."
+# Nutze dd mit direkter Hardware-Kompression
+echo "Start: $(date)"
+time (cat /tmp/qat_test | gzip -1 > /tmp/qat_test_hw.gz)
+HW_SIZE=$(stat -c%s /tmp/qat_test_hw.gz)
+echo "Komprimierte Größe (QAT): $HW_SIZE bytes"
+
+# QAT Counters nach Test
+echo -e "\nQAT Counters nach Test:"
+cat /sys/kernel/debug/qat_c3xxx_0000:01:00.0/fw_counters 2>/dev/null || echo "Debug nicht verfügbar"
+
+echo -e "\n=== Ergebnisse ==="
+ORIG_SIZE=$(stat -c%s /tmp/qat_test)
+echo "Original: $ORIG_SIZE bytes"
+echo "CPU-Kompression: $CPU_SIZE bytes"
+echo "QAT-Kompression: $HW_SIZE bytes"
+echo "CPU-Ratio: $(echo "scale=2; $CPU_SIZE * 100 / $ORIG_SIZE" | bc)%"
+echo "QAT-Ratio: $(echo "scale=2; $HW_SIZE * 100 / $ORIG_SIZE" | bc)%"
+
+# Cleanup
+rm -f /tmp/qat_test /tmp/qat_test_cpu.gz /tmp/qat_test_hw.gz

@@ -1,0 +1,29 @@
+#!/bin/bash
+# Pre-Reboot Status Check
+
+echo "=== PRE-REBOOT STATUS CHECK ==="
+echo "Zeitstempel: $(date)"
+
+echo -e "\n1. QAT Status vor Reboot:"
+/usr/local/bin/qat-status
+
+echo -e "\n2. SFP+ Status vor Reboot:"
+/usr/local/bin/sfp-passthrough-status
+
+echo -e "\n3. Git Repositories:"
+echo "Root Repo: $(ls -la /root/.git 2>/dev/null && echo "✅" || echo "❌")"
+echo "System Repo: $(ls -la /.git 2>/dev/null && echo "✅" || echo "❌")"
+
+echo -e "\n4. Konfigurationsdateien:"
+echo "QAT SR-IOV: $(test -f /etc/qat-sriov.sh && echo "✅" || echo "❌")"
+echo "VFIO Config: $(test -f /etc/modprobe.d/vfio-pci.conf && echo "✅" || echo "❌")"
+echo "ZFS QAT Config: $(test -f /etc/modprobe.d/zfs-qat.conf && echo "✅" || echo "❌")"
+
+echo -e "\n5. Services:"
+systemctl list-unit-files | grep qat-sriov
+
+echo -e "\n6. Module-Konfiguration:"
+echo "VFIO Module: $(cat /etc/modules-load.d/vfio.conf)"
+echo "VFIO PCI IDs: $(cat /etc/modprobe.d/vfio-pci.conf)"
+
+echo -e "\n=== REBOOT BEREIT ==="

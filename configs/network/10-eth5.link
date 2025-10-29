@@ -1,0 +1,6 @@
+# 1GbE eth5 persistent naming
+[Match]
+MACAddress=20:7c:14:f7:b2:27
+
+[Link]
+Name=eth5

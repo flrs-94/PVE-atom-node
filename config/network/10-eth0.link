@@ -1,0 +1,6 @@
+# USB Ethernet persistent naming
+[Match]
+MACAddress=00:e0:4c:30:31:df
+
+[Link]
+Name=eth0

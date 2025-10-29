@@ -1,0 +1,31 @@
+# Custom Network Interface Naming Rules - Reboot Persistent
+# PVE-atom-node Interface Mapping
+# Hohe Priorität (10-prefix) um Proxmox-Regeln zu überschreiben
+
+# USB Ethernet Adapter (Realtek RTL8153)
+SUBSYSTEM=="net", ACTION=="add", ATTR{address}=="00:e0:4c:30:31:df", NAME="eth0"
+SUBSYSTEM=="net", ACTION=="add", ATTRS{idVendor}=="0bda", ATTRS{idProduct}=="8153", NAME="eth0"
+
+# 1GbE Ports - MAC-basiert und PCI-basiert für Redundanz
+SUBSYSTEM=="net", ACTION=="add", ATTR{address}=="20:7c:14:f7:b2:23", NAME="eth1"
+SUBSYSTEM=="net", ACTION=="add", KERNELS=="0000:04:00.0", NAME="eth1"
+
+SUBSYSTEM=="net", ACTION=="add", ATTR{address}=="20:7c:14:f7:b2:24", NAME="eth2"  
+SUBSYSTEM=="net", ACTION=="add", KERNELS=="0000:05:00.0", NAME="eth2"
+
+SUBSYSTEM=="net", ACTION=="add", ATTR{address}=="20:7c:14:f7:b2:25", NAME="eth3"
+SUBSYSTEM=="net", ACTION=="add", KERNELS=="0000:06:00.0", NAME="eth3"
+
+SUBSYSTEM=="net", ACTION=="add", ATTR{address}=="20:7c:14:f7:b2:26", NAME="eth4"
+SUBSYSTEM=="net", ACTION=="add", KERNELS=="0000:07:00.0", NAME="eth4"
+
+SUBSYSTEM=="net", ACTION=="add", ATTR{address}=="20:7c:14:f7:b2:27", NAME="eth5"
+SUBSYSTEM=="net", ACTION=="add", KERNELS=="0000:08:00.0", NAME="eth5"
+
+# Intel X553 SFP+ 10GbE Interfaces (only 0c:00.x working)
+# 0b:00.x require valid SFP+ modules and fail to initialize without transceivers
+# 0b:00.0 → sfp6, 0b:00.1 → sfp7 (nicht funktional ohne SFP+ Module)
+# 0c:00.0 → sfp8, 0c:00.1 → sfp9 (funktional)
+SUBSYSTEM=="net", ACTION=="add", KERNELS=="0000:0c:00.0", NAME="sfp8"
+SUBSYSTEM=="net", ACTION=="add", KERNELS=="0000:0c:00.1", NAME="sfp9"
+SUBSYSTEM=="net", ACTION=="add", KERNELS=="0000:0c:00.1", NAME="sfp9"

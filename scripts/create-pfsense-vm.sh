@@ -42,19 +42,16 @@ qm create $VMID \
   --cpu host \
   --ostype l26 \
   --machine q35 \
-  --bios ovmf \
+  --bios seabios \
   --scsihw virtio-scsi-pci \
+  --vga std \
+  --serial0 socket \
   --bootdisk scsi0 \
-  --boot order=scsi0 \
+  --boot order=ide2 \
   --cdrom "$ISO" \
   --agent enabled=1
 
-echo "✅ VM created"
-
-# Add EFI disk
-echo "💾 Adding EFI disk..."
-pvesm alloc "$STORAGE" "$VMID" "vm-${VMID}-efi" 4M
-qm set $VMID --efidisk0 "${STORAGE}:vm-${VMID}-efi,efitype=4m,pre-enrolled-keys=0"
+echo "✅ VM created (SeaBIOS for better console compatibility)"
 
 # Add boot disk
 echo "💾 Adding boot disk (${DISK_SIZE}GB)..."

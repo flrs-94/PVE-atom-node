@@ -1,0 +1,21 @@
+#!/bin/bash
+# QAT Status und Performance Monitor
+
+echo "=== QAT Status ==="
+lspci | grep -c "QuickAssist.*Virtual Function"
+echo "Aktive VFs: $(lspci | grep -c "QuickAssist.*Virtual Function")"
+echo "Physical Function: $(lspci | grep -c "QuickAssist Technology (rev")"
+
+echo -e "\n=== QAT Firmware Status ==="
+if [ -r /sys/kernel/debug/qat_c3xxx_0000:01:00.0/fw_counters ]; then
+    cat /sys/kernel/debug/qat_c3xxx_0000:01:00.0/fw_counters
+else
+    echo "Debug interface nicht verfügbar (normal bei SR-IOV)"
+fi
+
+echo -e "\n=== QAT Crypto Engines ==="
+grep -c "qat" /proc/crypto
+echo "QAT-Driver in /proc/crypto: $(grep -c "qat" /proc/crypto)"
+
+echo -e "\n=== QAT Module ==="
+lsmod | grep qat

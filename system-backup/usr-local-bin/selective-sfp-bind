@@ -1,0 +1,15 @@
+#!/bin/bash
+# Spezifische PCI-Bind für pfSense Ports
+echo "Binde 0c:00.0 und 0c:00.1 an vfio-pci..."
+echo 0000:0c:00.0 > /sys/bus/pci/drivers/ixgbe/unbind 2>/dev/null || true
+echo 0000:0c:00.1 > /sys/bus/pci/drivers/ixgbe/unbind 2>/dev/null || true
+echo 0000:0c:00.0 > /sys/bus/pci/drivers/vfio-pci/bind 2>/dev/null || true
+echo 0000:0c:00.1 > /sys/bus/pci/drivers/vfio-pci/bind 2>/dev/null || true
+
+echo "Binde 0b:00.0 und 0b:00.1 an ixgbe..."
+echo 0000:0b:00.0 > /sys/bus/pci/drivers/vfio-pci/unbind 2>/dev/null || true
+echo 0000:0b:00.1 > /sys/bus/pci/drivers/vfio-pci/unbind 2>/dev/null || true
+echo 0000:0b:00.0 > /sys/bus/pci/drivers/ixgbe/bind 2>/dev/null || true
+echo 0000:0b:00.1 > /sys/bus/pci/drivers/ixgbe/bind 2>/dev/null || true
+
+echo "Selective SFP+ Binding abgeschlossen"

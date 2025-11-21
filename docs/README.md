@@ -1,14 +1,16 @@
-# PVE-atom-node - Gateway System Dokumentation
+# PVE-atom-node Gateway System
+**Intel Atom C3758 + Proxmox VE + QAT Hardware Acceleration**
 
 **Datum:** 28. Oktober 2025  
-**System:** Proxmox VE Gateway mit Hardware-Beschleunigung  
-**Ziel:** pfSense + TrueNAS Gateway mit QAT & SFP+ Passthrough
+**System:** Production-Ready Gateway mit vollständiger QAT Integration  
+**Status:** ✅ **OPERATIONAL**
 
-## 📋 Projekt-Übersicht
+## 📋 System Status
 
-Dieses System wurde als kritischer Gateway-Server konfiguriert mit:
-- **pfSense VM**: Firewall/Router mit SFP+ Passthrough für WAN/LAN
-- **TrueNAS VM**: Storage-System mit virtueller Bridge-Anbindung
+**Hardware:** Intel C3758 SoC mit QAT vollständig funktional  
+**Software:** Proxmox VE 8.3.2 mit optimierter Storage-Architecture  
+**QAT Integration:** 16 VFs ready, OpenSSL Engine verfügbar  
+**Performance:** 11x+ ZFS Kompression, stabile Production-Umgebung
 - **Intel QAT**: Hardware-Krypto-Beschleunigung für beide VMs
 - **Intel X553 SFP+**: 4x 10GbE Ports mit VFIO Passthrough
 

@@ -1,0 +1,53 @@
+/* QAT Monitoring CSS Styles */
+
+.pve-qat-high .x-progress-bar {
+    background-color: #ff6b6b !important;
+    background-image: linear-gradient(to bottom, #ff6b6b, #e55656) !important;
+}
+
+.pve-qat-medium .x-progress-bar {
+    background-color: #ffa726 !important;
+    background-image: linear-gradient(to bottom, #ffa726, #e8941f) !important;
+}
+
+.pve-qat-low .x-progress-bar {
+    background-color: #66bb6a !important;
+    background-image: linear-gradient(to bottom, #66bb6a, #5aa65e) !important;
+}
+
+.qat-engine-panel {
+    border: 1px solid #d0d0d0;
+    border-radius: 4px;
+    padding: 8px;
+    margin: 4px 0;
+    background: #f9f9f9;
+}
+
+.qat-engine-active {
+    border-left: 4px solid #4caf50;
+}
+
+.qat-engine-idle {
+    border-left: 4px solid #9e9e9e;
+}
+
+.qat-stats-grid {
+    font-family: monospace;
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+.qat-status-ok {
+    color: #4caf50;
+    font-weight: bold;
+}
+
+.qat-status-warning {
+    color: #ff9800;
+    font-weight: bold;
+}
+
+.qat-status-error {
+    color: #f44336;
+    font-weight: bold;
+}

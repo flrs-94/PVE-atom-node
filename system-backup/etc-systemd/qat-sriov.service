@@ -1,0 +1,11 @@
+[Unit]
+Description=Enable QAT SR-IOV Virtual Functions
+After=multi-user.target
+
+[Service]
+Type=oneshot
+ExecStart=/etc/qat-sriov.sh
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

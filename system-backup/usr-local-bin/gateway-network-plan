@@ -1,0 +1,30 @@
+#!/bin/bash
+# Optimale Netzwerk-Konfiguration für Gateway-Setup
+
+echo "=== Gateway Netzwerk-Setup ==="
+
+echo "1. pfSense bekommt beide SFP+ Ports (Passthrough):"
+echo "   - eno3 (0c:00.0): WAN-Interface (10GbE)"
+echo "   - eno4 (0c:00.1): LAN-Interface (10GbE)"
+echo "   - QAT VF: Hardware VPN-Beschleunigung"
+
+echo -e "\n2. Host behält 1GbE + SFP+ für Management:"
+echo "   - enp8s0: Management-Interface (aktuell in vmbr0)"
+echo "   - eno1/eno2: Backup/TrueNAS Bridge"
+
+echo -e "\n3. TrueNAS über virtuelle Bridge:"
+echo "   - Virtio-Netzwerk über vmbr0"
+echo "   - 10GbE Performance über Host-Bridge"
+echo "   - QAT VF für Storage-Kompression"
+
+echo -e "\n4. Netzwerk-Architektur:"
+echo "   Internet → pfSense WAN (eno3) → pfSense LAN (eno4) → Host Bridge"
+echo "                                                      ↓"
+echo "   TrueNAS ← vmbr1 ← Host (eno1/eno2)"
+
+echo -e "\n5. Vorteile dieser Konfiguration:"
+echo "   ✅ pfSense: Vollständige Hardware-Kontrolle über 10GbE"
+echo "   ✅ pfSense: Dedicated VPN-Hardware-Beschleunigung"
+echo "   ✅ TrueNAS: Flexible Netzwerk-Konfiguration"
+echo "   ✅ Host: Management über separate Interfaces"
+echo "   ✅ Skalierbar: Zusätzliche VMs können einfach hinzugefügt werden"

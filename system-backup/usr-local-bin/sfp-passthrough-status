@@ -1,0 +1,40 @@
+#!/bin/bash
+# SFP+ Passthrough Status Check
+
+echo "=== SFP+ Passthrough Status ==="
+
+echo -e "\n1. SFP+ Hardware:"
+lspci | grep "10 GbE SFP+"
+
+echo -e "\n2. IOMMU-Gruppen:"
+for port in 0b:00.0 0b:00.1 0c:00.0 0c:00.1; do
+    echo "Port $port: IOMMU Group $(lspci -vvv -s $port | grep "IOMMU group" | cut -d: -f2 | tr -d ' ')"
+done
+
+echo -e "\n3. VFIO-Status:"
+if lsmod | grep -q vfio_pci; then
+    echo "✅ VFIO-PCI Module geladen"
+else
+    echo "❌ VFIO-PCI Module nicht geladen"
+fi
+
+echo -e "\n4. Ixgbe-Treiber Status:"
+if lsmod | grep -q ixgbe; then
+    echo "⚠️  Ixgbe-Treiber noch aktiv (nach Neustart deaktiviert)"
+    echo "Aktive Interfaces:"
+    ip link show | grep eno
+else
+    echo "✅ Ixgbe-Treiber deaktiviert für Passthrough-Ports"
+fi
+
+echo -e "\n5. Geplante VM-Zuordnung:"
+echo "   pfSense: 0c:00.0 (eno3) WAN + 0c:00.1 (eno4) LAN"
+echo "           + QAT VF für VPN-Hardware-Beschleunigung"
+echo "   TrueNAS: Virtuelle Netzwerk-Bridge über Host"
+echo "           + QAT VF für Storage-Kompression"
+echo "   Host:    0b:00.0 (eno1) + 0b:00.1 (eno2) für TrueNAS-Bridge"
+
+echo -e "\n6. Nächste Schritte:"
+echo "   - Neustart für VFIO-Aktivierung"
+echo "   - VM-Erstellung mit PCI-Passthrough"
+echo "   - QAT-VFs zuweisen"

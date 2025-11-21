@@ -1,0 +1,14 @@
+# OpenSSL QAT Configuration
+openssl_conf = openssl_def
+
+[openssl_def]
+engines = engine_section
+
+[engine_section]
+qat = qat_section
+
+[qat_section]
+engine_id = qatengine
+dynamic_path = /usr/lib/x86_64-linux-gnu/engines-3/qatengine.so
+default_algorithms = ALL
+init = 1

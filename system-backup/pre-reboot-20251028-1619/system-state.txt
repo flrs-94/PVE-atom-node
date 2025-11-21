@@ -1,0 +1,5 @@
+Current Status Summary:
+Date: Tue Oct 28 04:21:17 PM CET 2025
+Uptime:  16:21:17 up  2:38,  2 users,  load average: 0.08, 0.10, 0.09
+QAT Status: BROKEN (VFs lost during debug)
+Expected after reboot: 16 QAT VFs restored

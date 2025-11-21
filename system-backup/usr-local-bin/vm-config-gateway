@@ -1,0 +1,38 @@
+#!/bin/bash
+# VM-Konfiguration für Gateway-Setup
+
+echo "=== Gateway VM-Konfiguration ==="
+
+echo "1. pfSense VM (ID: 100):"
+echo "   qm create 100 --name pfsense-gateway \\"
+echo "     --memory 4096 --cores 4 --cpu x86-64-v3 \\"
+echo "     --net0 virtio,bridge=vmbr0 \\"
+echo "     --hostpci0 0000:0c:00.0,pcie=1 \\"
+echo "     --hostpci1 0000:0c:00.1,pcie=1 \\"
+echo "     --hostpci2 0000:01:01.0,pcie=1"
+
+echo -e "\n   Hardware-Zuordnung:"
+echo "   - hostpci0: SFP+ WAN (eno3)"
+echo "   - hostpci1: SFP+ LAN (eno4)"  
+echo "   - hostpci2: QAT VF für VPN"
+echo "   - net0: Management über vmbr0"
+
+echo -e "\n2. TrueNAS VM (ID: 101):"
+echo "   qm create 101 --name truenas-storage \\"
+echo "     --memory 16384 --cores 8 --cpu x86-64-v3 \\"
+echo "     --net0 virtio,bridge=vmbr1 \\"
+echo "     --hostpci0 0000:01:01.1,pcie=1"
+
+echo -e "\n   Hardware-Zuordnung:"
+echo "   - net0: 10GbE über vmbr1 (eno1)"
+echo "   - hostpci0: QAT VF für Kompression"
+
+echo -e "\n3. Netzwerk-Flow:"
+echo "   Internet → pfSense (eno3) → pfSense (eno4) → vmbr1 → TrueNAS"
+echo "                               ↓"
+echo "   Management ← vmbr0 ← Host (enp8s0)"
+
+echo -e "\n4. Performance-Erwartung:"
+echo "   - pfSense: Line-Speed 10GbE mit Hardware-VPN"
+echo "   - TrueNAS: ~9GbE über virtuelle Bridge"
+echo "   - Host: Separates Management-Interface"
